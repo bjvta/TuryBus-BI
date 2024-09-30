@@ -63,5 +63,15 @@
   <ItemGroup>
     <Build Include="Schema\Tables\conductor.sql" />
     <Build Include="Schema\Tables\autobus.sql" />
+    <Build Include="Schema\Tables\ruta.sql" />
+    <Build Include="Schema\Tables\lugar.sql" />
+    <Build Include="Schema\Tables\ruta_lugar.sql" />
+    <Build Include="Schema\Tables\turista.sql" />
+    <Build Include="Schema\Tables\servicio_diario.sql" />
+    <Build Include="Schema\Tables\asignacion_servicio.sql" />
+    <Build Include="Schema\Tables\billete.sql" />
+    <Build Include="Schema\Tables\revision.sql" />
+    <Build Include="Schema\Tables\actividad_turistica.sql" />
+    <Build Include="Schema\Tables\billete_actividad.sql" />
   </ItemGroup>
 </Project>
