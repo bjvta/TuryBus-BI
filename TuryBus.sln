@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Databases", "Databases", "{2499C6C0-A063-4381-BD11-EDE73D3A3D55}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ETL", "ETL", "{ADE4E702-EB30-4540-A4C0-BFDE5722BEC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OLAP", "OLAP", "{B7F4A6D4-DA24-40A8-9611-50028EA98226}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TuryBusOLTP", "TuryBusOLTP\TuryBusOLTP.sqlproj", "{08F68A53-F111-40DB-81BC-75412172184D}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TuryBusDW", "TuryBusDW\TuryBusDW.sqlproj", "{2B2C97E3-C344-4FF7-86FD-EF4FD79F01DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08F68A53-F111-40DB-81BC-75412172184D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08F68A53-F111-40DB-81BC-75412172184D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08F68A53-F111-40DB-81BC-75412172184D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{08F68A53-F111-40DB-81BC-75412172184D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08F68A53-F111-40DB-81BC-75412172184D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08F68A53-F111-40DB-81BC-75412172184D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{2B2C97E3-C344-4FF7-86FD-EF4FD79F01DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B2C97E3-C344-4FF7-86FD-EF4FD79F01DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B2C97E3-C344-4FF7-86FD-EF4FD79F01DB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2B2C97E3-C344-4FF7-86FD-EF4FD79F01DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B2C97E3-C344-4FF7-86FD-EF4FD79F01DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B2C97E3-C344-4FF7-86FD-EF4FD79F01DB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{08F68A53-F111-40DB-81BC-75412172184D} = {2499C6C0-A063-4381-BD11-EDE73D3A3D55}
+		{2B2C97E3-C344-4FF7-86FD-EF4FD79F01DB} = {2499C6C0-A063-4381-BD11-EDE73D3A3D55}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C8C3BAB5-7C7A-4A66-9B60-022C725DD490}
+	EndGlobalSection
+EndGlobal
