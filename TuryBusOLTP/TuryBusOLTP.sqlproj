@@ -22,6 +22,8 @@
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
+    <IncludeSchemaNameInFileName>False</IncludeSchemaNameInFileName>
+    <GenerateCreateScript>False</GenerateCreateScript>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -59,19 +61,33 @@
     <Folder Include="Schema" />
     <Folder Include="Scripts" />
     <Folder Include="Schema\Tables" />
+    <Folder Include="Schema\Security" />
+    <Folder Include="Schema\Security\Schemas" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Schema\Tables\conductor.sql" />
-    <Build Include="Schema\Tables\autobus.sql" />
-    <Build Include="Schema\Tables\ruta.sql" />
-    <Build Include="Schema\Tables\lugar.sql" />
-    <Build Include="Schema\Tables\ruta_lugar.sql" />
-    <Build Include="Schema\Tables\turista.sql" />
-    <Build Include="Schema\Tables\servicio_diario.sql" />
-    <Build Include="Schema\Tables\asignacion_servicio.sql" />
-    <Build Include="Schema\Tables\billete.sql" />
-    <Build Include="Schema\Tables\revision.sql" />
-    <Build Include="Schema\Tables\actividad_turistica.sql" />
-    <Build Include="Schema\Tables\billete_actividad.sql" />
+    <Build Include="Schema\Tables\driver.sql" />
+    <Build Include="Schema\Tables\bus.sql" />
+    <Build Include="Schema\Tables\guide.sql" />
+    <Build Include="Schema\Tables\extra_bus.sql" />
+    <Build Include="Schema\Tables\customer.sql" />
+    <Build Include="Schema\Tables\location.sql" />
+    <Build Include="Schema\Tables\tourist_route.sql" />
+    <Build Include="Schema\Tables\tourist_guide.sql" />
+    <Build Include="Schema\Tables\bus_maintenance_header.sql" />
+    <Build Include="Schema\Tables\bus_maintenance_detail.sql" />
+    <Build Include="Schema\Tables\route_stop.sql" />
+    <Build Include="Schema\Tables\route_activity.sql" />
+    <Build Include="Schema\Tables\daily_service.sql" />
+    <Build Include="Schema\Tables\extra_service.sql" />
+    <Build Include="Schema\Tables\tourist_route_transport.sql" />
+    <Build Include="Schema\Tables\tourist_operation_cost.sql" />
+    <Build Include="Schema\Tables\booking.sql" />
+    <Build Include="Schema\Security\Schemas\financial.sql" />
+    <Build Include="Schema\Security\Schemas\logistic.sql" />
+    <Build Include="Schema\Security\Schemas\tourist.sql" />
+    <Build Include="Schema\Security\Schemas\human_resource.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
   </ItemGroup>
 </Project>

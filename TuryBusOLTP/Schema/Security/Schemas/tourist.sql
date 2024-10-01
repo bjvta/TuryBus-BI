@@ -1,2 +1,1 @@
 ﻿CREATE SCHEMA [tourist]
-GO

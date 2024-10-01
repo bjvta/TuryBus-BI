@@ -10,7 +10,6 @@
 	[children] BIT,
     [service_type] VARCHAR(255)      NOT NULL,
     [price] DECIMAL(10,2)      NOT NULL,
-    [price] DECIMAL(10,2)      NOT NULL,
     [tourist_route_id] INT NOT NULL,
 	[rowversion] [timestamp]         NOT NULL
 )

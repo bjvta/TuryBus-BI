@@ -10,5 +10,5 @@
 GO
 ALTER TABLE [logistic].[extra_bus] ADD CONSTRAINT FK_extra_bus_bus FOREIGN KEY([bus_id]) REFERENCES [logistic].[bus] ([id])
 ON UPDATE CASCADE
-ON DELETE CASCADE
+ON DELETE CASCADE	
 GO
