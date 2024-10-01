@@ -22,10 +22,10 @@ Post-Deployment Script Template
 :r .\route_activity.data.sql
 :r .\tourist_guide.data.sql
 :r .\booking.data.sql
-/*
 :r .\extra_service.data.sql
 :r .\bus_maintenance_header.data.sql
 :r .\bus_maintenance_detail.data.sql
+/*
 :r .\extra_bus.data.sql
 :r .\tourist_operation_cost.data.sql
 :r .\tourist_route_transport.data.sql
