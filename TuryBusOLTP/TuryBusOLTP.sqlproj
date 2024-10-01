@@ -109,5 +109,9 @@
     <None Include="Scripts\tourist_guide.data.sql" />
     <None Include="Scripts\tourist_route.data.sql" />
     <None Include="Scripts\tourist_route_transport.data.sql" />
+    <None Include="Scripts\clean.data.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
 </Project>
