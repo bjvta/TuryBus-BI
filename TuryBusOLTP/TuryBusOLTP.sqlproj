@@ -92,5 +92,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="TuryBusOLTP.publish.xml" />
+    <None Include="Scripts\booking.data.sql" />
+    <None Include="Scripts\tourist_operation_cost.data.sql" />
+    <None Include="Scripts\driver.data.sql" />
+    <None Include="Scripts\guide.data.sql" />
+    <None Include="Scripts\bus.data.sql" />
+    <None Include="Scripts\bus_maintenance_detail.data.sql" />
+    <None Include="Scripts\bus_maintenance_header.data.sql" />
+    <None Include="Scripts\extra_bus.data.sql" />
+    <None Include="Scripts\customer.data.sql" />
+    <None Include="Scripts\daily_service.data.sql" />
+    <None Include="Scripts\extra_service.data.sql" />
+    <None Include="Scripts\location.data.sql" />
+    <None Include="Scripts\route_activity.data.sql" />
+    <None Include="Scripts\route_stop.data.sql" />
+    <None Include="Scripts\tourist_guide.data.sql" />
+    <None Include="Scripts\tourist_route.data.sql" />
+    <None Include="Scripts\tourist_route_transport.data.sql" />
   </ItemGroup>
 </Project>
