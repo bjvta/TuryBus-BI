@@ -90,4 +90,7 @@
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="TuryBusOLTP.publish.xml" />
+  </ItemGroup>
 </Project>

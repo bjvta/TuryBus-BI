@@ -10,17 +10,17 @@
 	[available_guides] BIT,
 	[languages_available] TEXT,
 	[route_type] VARCHAR(255),
-	[origin_id] INT NOT NULL,
-	[destination_id] INT NOT NULL,
+	[origin_id] INT,
+	[destination_id] INT,
 	[rowversion] [timestamp]         NOT NULL
 )
 GO
 
 ALTER TABLE [tourist].[tourist_route] ADD CONSTRAINT FK_tourist_route_location_origin FOREIGN KEY([origin_id]) REFERENCES [tourist].[location] ([id])
-ON UPDATE CASCADE
-ON DELETE CASCADE
+ON UPDATE NO ACTION
+ON DELETE NO ACTION
 GO
 ALTER TABLE [tourist].[tourist_route] ADD CONSTRAINT FK_tourist_route_location_destination FOREIGN KEY([destination_id]) REFERENCES [tourist].[location] ([id])
-ON UPDATE CASCADE
-ON DELETE CASCADE
+ON UPDATE NO ACTION
+ON DELETE NO ACTION
 GO
