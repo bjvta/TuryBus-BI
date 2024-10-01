@@ -80,4 +80,7 @@
     <Build Include="Schema\Tables\staging\tourist_route.sql" />
     <Build Include="Schema\Tables\staging\booking.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="TuryBusDW.publish.xml" />
+  </ItemGroup>
 </Project>

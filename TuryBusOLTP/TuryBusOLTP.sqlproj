@@ -63,6 +63,8 @@
     <Folder Include="Schema\Tables" />
     <Folder Include="Schema\Security" />
     <Folder Include="Schema\Security\Schemas" />
+    <Folder Include="Schema\Programmability" />
+    <Folder Include="Schema\Programmability\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schema\Tables\driver.sql" />
@@ -86,6 +88,7 @@
     <Build Include="Schema\Security\Schemas\logistic.sql" />
     <Build Include="Schema\Security\Schemas\tourist.sql" />
     <Build Include="Schema\Security\Schemas\human_resource.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\GetDatabaseRowVersion.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
