@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Databases", "Databases", "{2499C6C0-A063-4381-BD11-EDE73D3A3D55}"
+	ProjectSection(SolutionItems) = preProject
+		backup.sql = backup.sql
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ETL", "ETL", "{ADE4E702-EB30-4540-A4C0-BFDE5722BEC2}"
 EndProject
