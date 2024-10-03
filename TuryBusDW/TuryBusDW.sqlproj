@@ -67,18 +67,16 @@
     <Build Include="Schema\Security\Schemas\staging.sql" />
     <Build Include="Schema\Tables\dbo\DimCustomer.sql" />
     <Build Include="Schema\Tables\dbo\DimDate.sql" />
-    <Build Include="Schema\Tables\dbo\DimExtraService.sql" />
     <Build Include="Schema\Tables\dbo\DimPaymentStatus.sql" />
-    <Build Include="Schema\Tables\dbo\DimService.sql" />
-    <Build Include="Schema\Tables\dbo\DimTouristRoute.sql" />
+    <Build Include="Schema\Tables\dbo\DimDailyService.sql" />
     <Build Include="Schema\Tables\dbo\FactBooking.sql" />
     <Build Include="Schema\Tables\dbo\PackageConfig.sql" />
     <Build Include="Schema\Tables\staging\customer.sql" />
-    <Build Include="Schema\Tables\staging\extra_service.sql" />
     <Build Include="Schema\Tables\staging\payment_status.sql" />
-    <Build Include="Schema\Tables\staging\service.sql" />
-    <Build Include="Schema\Tables\staging\tourist_route.sql" />
+    <Build Include="Schema\Tables\staging\daily_service.sql" />
     <Build Include="Schema\Tables\staging\booking.sql" />
+    <Build Include="Schema\Tables\dbo\DimBookingStatus.sql" />
+    <Build Include="Schema\Tables\staging\booking_status.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TuryBusDW.publish.xml" />
