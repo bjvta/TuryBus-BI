@@ -9,8 +9,7 @@
     <ProjectGuid>{08f68a53-f111-40db-81bc-75412172184d}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
-    <RootPath>
-    </RootPath>
+    <RootPath />
     <RootNamespace>TuryBusOLTP</RootNamespace>
     <AssemblyName>TuryBusOLTP</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
@@ -50,7 +49,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
-    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
     <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
     <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
   </PropertyGroup>
@@ -63,6 +61,8 @@
     <Folder Include="Schema\Tables" />
     <Folder Include="Schema\Security" />
     <Folder Include="Schema\Security\Schemas" />
+    <Folder Include="Schema\Programmability" />
+    <Folder Include="Schema\Programmability\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schema\Tables\driver.sql" />
@@ -86,6 +86,9 @@
     <Build Include="Schema\Security\Schemas\logistic.sql" />
     <Build Include="Schema\Security\Schemas\tourist.sql" />
     <Build Include="Schema\Security\Schemas\human_resource.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\GetDatabaseRowVersion.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\GetCustomerChangesByRowVersion.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\GetBookingChangesByRowVersion.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
