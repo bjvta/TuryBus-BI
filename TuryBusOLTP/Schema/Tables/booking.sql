@@ -2,7 +2,7 @@
 (
 	[id] INT IDENTITY(1,1) NOT NULL CONSTRAINT pk_financial_booking PRIMARY KEY,
     [booking_date] DATETIME      NOT NULL,
-    [price] DECIMAL(10,2)      NOT NULL,
+    [price] DECIMAL(10,2)      NOT NULL, 
     [currency] VARCHAR(255)      NOT NULL,
     [payment_status] VARCHAR(255)      NOT NULL,
     [special_request] VARCHAR(255)      NOT NULL,
