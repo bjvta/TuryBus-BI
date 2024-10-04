@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [staging].[service]
 (
-	[service_id] [int] NOT NULL,
+	[service_sk] [int] NOT NULL,
     start_time DATETIME NOT NULL,
     end_time DATETIME NOT NULL,
     seasonality VARCHAR(255) NOT NULL,
