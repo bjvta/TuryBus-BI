@@ -61,6 +61,8 @@
     <Folder Include="Schema\Tables\dbo" />
     <Folder Include="Schema\Tables\staging" />
     <Folder Include="Scripts" />
+    <Folder Include="Schema\Programmability" />
+    <Folder Include="Schema\Programmability\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schema\Security\Schemas\staging.sql" />
@@ -72,6 +74,9 @@
     <Build Include="Schema\Tables\staging\customer.sql" />
     <Build Include="Schema\Tables\staging\daily_service.sql" />
     <Build Include="Schema\Tables\staging\booking.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\GetLastPackageRowVersion.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\UpdateLastPackageRowVersion.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\DW_MergeDimCustomer.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TuryBusDW.publish.xml" />
