@@ -1,0 +1,2274 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/10/2024 11:58:19 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="JOELTORREJOC5EC"
+  DTS:CreatorName="JOELTORREJOC5EC\joeltorrejon"
+  DTS:DTSID="{1EBAEC23-F885-4A49-960C-4A0B711D262F}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5685.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="DimDailyService"
+  DTS:PackageType="5"
+  DTS:VersionBuild="19"
+  DTS:VersionGUID="{4FD48A61-4FC3-4717-8A34-EDBC8694B0F4}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source.TuryBusOLTP]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{B764096D-1BEF-4424-9BB3-342AA4B210E5}"
+      DTS:ObjectName="Source.TuryBusOLTP">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=JOELTORREJOC5EC;Initial Catalog=TuryBusOLTP;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-DimDailyService-{B764096D-1BEF-4424-9BB3-342AA4B210E5}JOELTORREJOC5EC.TuryBusOLTP;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Target.TuryBusDW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{7F584B5F-CCC6-4430-9154-86AC3E24748E}"
+      DTS:ObjectName="Target.TuryBusDW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=JOELTORREJOC5EC;Initial Catalog=TuryBusDW;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-DimDailyService-{7F584B5F-CCC6-4430-9154-86AC3E24748E}JOELTORREJOC5EC.TuryBusDW;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D3CA9134-1182-420D-83EA-583F58AD74A7}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="dbts">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B8D086F9-84E6-4B96-A91D-17AA4F877A1D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="lastRowVersion">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Clean-up staging"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarea Ejecutar SQL"
+      DTS:DTSID="{B586F894-A985-4931-9ED4-6FABADD9F82D}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Clean-up staging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7F584B5F-CCC6-4430-9154-86AC3E24748E}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE [staging].[service];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get Database RowVersion"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarea Ejecutar SQL"
+      DTS:DTSID="{E5B65A28-FF00-4FDA-842E-ED210F531CBC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Database RowVersion"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B764096D-1BEF-4424-9BB3-342AA4B210E5}"
+          SQLTask:SqlStatementSource="EXECUTE [dbo].[GetDatabaseRowVersion]"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="DBTS"
+            SQLTask:DtsVariableName="User::dbts" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get LastRowVersion"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarea Ejecutar SQL"
+      DTS:DTSID="{3FD08416-7231-403B-92BB-647C7F6C1657}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get LastRowVersion"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7F584B5F-CCC6-4430-9154-86AC3E24748E}"
+          SQLTask:SqlStatementSource="EXECUTE [dbo].[GetLastPackageRowVersion] @tableName = 'service'"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="LastRowVersion"
+            SQLTask:DtsVariableName="User::lastRowVersion" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Services"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{8B01B558-3E34-4F9E-8F96-8F6FF2964F9A}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Services"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Services\Get Services"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Get Services"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">EXECUTE [dbo].[GetDailyServiceChangesByRowVersion] @startRow = ?, @endRow = ?</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping">"@startRow:Input",{B8D086F9-84E6-4B96-A91D-17AA4F877A1D};"@endRow:Input",{D3CA9134-1182-420D-83EA-583F58AD74A7};</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Services\Get Services.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Source.TuryBusOLTP]"
+                  connectionManagerRefId="Package.ConnectionManagers[Source.TuryBusOLTP]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[service_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[service_id]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[service_id]"
+                      name="service_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[start_time]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[start_time]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[start_time]"
+                      name="start_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[end_time]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[end_time]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[end_time]"
+                      name="end_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[seasonality]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[seasonality]"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[seasonality]"
+                      name="seasonality"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[price_per_person]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[price_per_person]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[price_per_person]"
+                      name="price_per_person"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[max_group_size]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[max_group_size]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[max_group_size]"
+                      name="max_group_size"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[min_group_size]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[min_group_size]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[min_group_size]"
+                      name="min_group_size"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[children]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[children]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[children]"
+                      name="children"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[service_type]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[service_type]"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[service_type]"
+                      name="service_type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[route_name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[route_name]"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[route_name]"
+                      name="route_name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[description]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[description]"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[description]"
+                      name="description"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[distance_km]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[distance_km]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[distance_km]"
+                      name="distance_km"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[duration_hours]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[duration_hours]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[duration_hours]"
+                      name="duration_hours"
+                      precision="10"
+                      scale="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[difficulty_level]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[difficulty_level]"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[difficulty_level]"
+                      name="difficulty_level"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[transport_mode]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[transport_mode]"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[transport_mode]"
+                      name="transport_mode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[available_guides]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[available_guides]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[available_guides]"
+                      name="available_guides"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[languages_available]"
+                      codePage="1252"
+                      dataType="text"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[languages_available]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[languages_available]"
+                      name="languages_available"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[route_type]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[route_type]"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[route_type]"
+                      name="route_type"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[orig_lat]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[orig_lat]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[orig_lat]"
+                      name="orig_lat"
+                      precision="9"
+                      scale="6"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[orig_lng]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[orig_lng]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[orig_lng]"
+                      name="orig_lng"
+                      precision="9"
+                      scale="6"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[orig_place]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[orig_place]"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[orig_place]"
+                      name="orig_place"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[orig_description]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[orig_description]"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[orig_description]"
+                      name="orig_description"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[dest_lat]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[dest_lat]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[dest_lat]"
+                      name="dest_lat"
+                      precision="9"
+                      scale="6"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[dest_lng]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[dest_lng]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[dest_lng]"
+                      name="dest_lng"
+                      precision="9"
+                      scale="6"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[dest_place]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[dest_place]"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[dest_place]"
+                      name="dest_place"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[dest_description]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[dest_description]"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[dest_description]"
+                      name="dest_description"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[service_id]"
+                      dataType="i4"
+                      name="service_id" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[start_time]"
+                      dataType="dbTimeStamp"
+                      name="start_time" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[end_time]"
+                      dataType="dbTimeStamp"
+                      name="end_time" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[seasonality]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="seasonality" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[price_per_person]"
+                      dataType="numeric"
+                      name="price_per_person"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[max_group_size]"
+                      dataType="i4"
+                      name="max_group_size" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[min_group_size]"
+                      dataType="i4"
+                      name="min_group_size" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[children]"
+                      dataType="bool"
+                      name="children" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[service_type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="service_type" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[route_name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="route_name" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[description]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="description" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[distance_km]"
+                      dataType="numeric"
+                      name="distance_km"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[duration_hours]"
+                      dataType="numeric"
+                      name="duration_hours"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[difficulty_level]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="difficulty_level" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[transport_mode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="transport_mode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[available_guides]"
+                      dataType="bool"
+                      name="available_guides" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[languages_available]"
+                      codePage="1252"
+                      dataType="text"
+                      name="languages_available" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[route_type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="route_type" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[orig_lat]"
+                      dataType="numeric"
+                      name="orig_lat"
+                      precision="9"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[orig_lng]"
+                      dataType="numeric"
+                      name="orig_lng"
+                      precision="9"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[orig_place]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="orig_place" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[orig_description]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="orig_description" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[dest_lat]"
+                      dataType="numeric"
+                      name="dest_lat"
+                      precision="9"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[dest_lng]"
+                      dataType="numeric"
+                      name="dest_lng"
+                      precision="9"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[dest_place]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="dest_place" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].ExternalColumns[dest_description]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="dest_description" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[service_id]"
+                      dataType="i4"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[service_id]"
+                      name="service_id" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[start_time]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[start_time]"
+                      name="start_time" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[end_time]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[end_time]"
+                      name="end_time" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[seasonality]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[seasonality]"
+                      name="seasonality" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[price_per_person]"
+                      dataType="numeric"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[price_per_person]"
+                      name="price_per_person"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[max_group_size]"
+                      dataType="i4"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[max_group_size]"
+                      name="max_group_size" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[min_group_size]"
+                      dataType="i4"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[min_group_size]"
+                      name="min_group_size" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[children]"
+                      dataType="bool"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[children]"
+                      name="children" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[service_type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[service_type]"
+                      name="service_type" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[route_name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[route_name]"
+                      name="route_name" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[description]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[description]"
+                      name="description" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[distance_km]"
+                      dataType="numeric"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[distance_km]"
+                      name="distance_km"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[duration_hours]"
+                      dataType="numeric"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[duration_hours]"
+                      name="duration_hours"
+                      precision="10"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[difficulty_level]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[difficulty_level]"
+                      name="difficulty_level" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[transport_mode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[transport_mode]"
+                      name="transport_mode" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[available_guides]"
+                      dataType="bool"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[available_guides]"
+                      name="available_guides" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[languages_available]"
+                      codePage="1252"
+                      dataType="text"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[languages_available]"
+                      name="languages_available" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[route_type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[route_type]"
+                      name="route_type" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[orig_lat]"
+                      dataType="numeric"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[orig_lat]"
+                      name="orig_lat"
+                      precision="9"
+                      scale="6" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[orig_lng]"
+                      dataType="numeric"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[orig_lng]"
+                      name="orig_lng"
+                      precision="9"
+                      scale="6" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[orig_place]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[orig_place]"
+                      name="orig_place" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[orig_description]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[orig_description]"
+                      name="orig_description" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[dest_lat]"
+                      dataType="numeric"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[dest_lat]"
+                      name="dest_lat"
+                      precision="9"
+                      scale="6" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[dest_lng]"
+                      dataType="numeric"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[dest_lng]"
+                      name="dest_lng"
+                      precision="9"
+                      scale="6" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[dest_place]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[dest_place]"
+                      name="dest_place" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[dest_description]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[dest_description]"
+                      name="dest_description" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Services\Load Dim"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Load Dim"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[DimDailyService]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Services\Load Dim.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Target.TuryBusDW]"
+                  connectionManagerRefId="Package.ConnectionManagers[Target.TuryBusDW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[service_id]"
+                      cachedDataType="i4"
+                      cachedName="service_id"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[service_id]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[service_id]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[start_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="start_time"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[start_time]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[start_time]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[end_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="end_time"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[end_time]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[end_time]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[seasonality]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="seasonality"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[seasonality]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[seasonality]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[max_group_size]"
+                      cachedDataType="i4"
+                      cachedName="max_group_size"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[max_group_size]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[max_group_size]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[min_group_size]"
+                      cachedDataType="i4"
+                      cachedName="min_group_size"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[min_group_size]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[min_group_size]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[service_type]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="service_type"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[service_type]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[service_type]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[route_name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="route_name"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[route_name]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[route_name]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[description]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="description"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[description]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[description]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[distance_km]"
+                      cachedDataType="numeric"
+                      cachedName="distance_km"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[distance_km]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[distance_km]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[duration_hours]"
+                      cachedDataType="numeric"
+                      cachedName="duration_hours"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[duration_hours]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[duration_hours]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[difficulty_level]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="difficulty_level"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[difficulty_level]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[difficulty_level]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[transport_mode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="transport_mode"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[transport_mode]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[transport_mode]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[available_guides]"
+                      cachedDataType="bool"
+                      cachedName="available_guides"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[available_guides]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[available_guides]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[route_type]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="route_type"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[route_type]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[route_type]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[orig_lat]"
+                      cachedDataType="numeric"
+                      cachedName="orig_lat"
+                      cachedPrecision="9"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[orig_lat]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[orig_lat]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[orig_lng]"
+                      cachedDataType="numeric"
+                      cachedName="orig_lng"
+                      cachedPrecision="9"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[orig_lng]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[orig_lng]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[orig_place]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="orig_place"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[orig_place]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[orig_place]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[orig_description]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="orig_description"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[orig_description]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[orig_description]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[dest_lat]"
+                      cachedDataType="numeric"
+                      cachedName="dest_lat"
+                      cachedPrecision="9"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[dest_lat]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[dest_lat]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[dest_lng]"
+                      cachedDataType="numeric"
+                      cachedName="dest_lng"
+                      cachedPrecision="9"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[dest_lng]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[dest_lng]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[dest_place]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="dest_place"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[dest_place]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[dest_place]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[dest_description]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="dest_description"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[dest_description]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[dest_description]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[languages_available]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="languages_available"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[languages_availables]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[languages_available]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[children]"
+                      cachedDataType="bool"
+                      cachedName="children"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[children_allowed]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[children]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].Columns[price_per_person]"
+                      cachedDataType="numeric"
+                      cachedName="price_per_person"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[price]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[price_per_person]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[service_sk]"
+                      dataType="i4"
+                      name="service_sk" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[service_id]"
+                      dataType="i4"
+                      name="service_id" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[start_time]"
+                      dataType="dbTimeStamp"
+                      name="start_time" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[end_time]"
+                      dataType="dbTimeStamp"
+                      name="end_time" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[seasonality]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="seasonality" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[price]"
+                      dataType="numeric"
+                      name="price"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[max_group_size]"
+                      dataType="i4"
+                      name="max_group_size" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[min_group_size]"
+                      dataType="i4"
+                      name="min_group_size" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[children_allowed]"
+                      dataType="bool"
+                      name="children_allowed" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[service_type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="service_type" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[route_name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="route_name" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[description]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="description" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[distance_km]"
+                      dataType="numeric"
+                      name="distance_km"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[duration_hours]"
+                      dataType="numeric"
+                      name="duration_hours"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[difficulty_level]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="difficulty_level" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[transport_mode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="transport_mode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[available_guides]"
+                      dataType="bool"
+                      name="available_guides" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[languages_availables]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="languages_availables" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[route_type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="route_type" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[orig_lat]"
+                      dataType="numeric"
+                      name="orig_lat"
+                      precision="9"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[orig_lng]"
+                      dataType="numeric"
+                      name="orig_lng"
+                      precision="9"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[orig_place]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="orig_place" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[orig_description]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="orig_description" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[dest_lat]"
+                      dataType="numeric"
+                      name="dest_lat"
+                      precision="9"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[dest_lng]"
+                      dataType="numeric"
+                      name="dest_lng"
+                      precision="9"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[dest_place]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="dest_place" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input].ExternalColumns[dest_description]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="dest_description" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Services\Load Dim.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Services\Load Dim.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Services\Load Dim.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Services\Load Dim.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Services\Load Dim.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Services\Load staging"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Load staging"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[staging].[service]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Services\Load staging.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Target.TuryBusDW]"
+                  connectionManagerRefId="Package.ConnectionManagers[Target.TuryBusDW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[start_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="start_time"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[start_time]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[start_time]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[end_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="end_time"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[end_time]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[end_time]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[seasonality]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="seasonality"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[seasonality]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[seasonality]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[max_group_size]"
+                      cachedDataType="i4"
+                      cachedName="max_group_size"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[max_group_size]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[max_group_size]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[min_group_size]"
+                      cachedDataType="i4"
+                      cachedName="min_group_size"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[min_group_size]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[min_group_size]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[service_type]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="service_type"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[service_type]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[service_type]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[route_name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="route_name"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[route_name]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[route_name]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[description]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="description"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[description]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[description]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[distance_km]"
+                      cachedDataType="numeric"
+                      cachedName="distance_km"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[distance_km]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[distance_km]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[duration_hours]"
+                      cachedDataType="numeric"
+                      cachedName="duration_hours"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[duration_hours]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[duration_hours]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[difficulty_level]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="difficulty_level"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[difficulty_level]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[difficulty_level]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[transport_mode]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="transport_mode"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[transport_mode]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[transport_mode]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[available_guides]"
+                      cachedDataType="bool"
+                      cachedName="available_guides"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[available_guides]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[available_guides]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[route_type]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="route_type"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[route_type]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[route_type]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[orig_lat]"
+                      cachedDataType="numeric"
+                      cachedName="orig_lat"
+                      cachedPrecision="9"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[orig_lat]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[orig_lat]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[orig_lng]"
+                      cachedDataType="numeric"
+                      cachedName="orig_lng"
+                      cachedPrecision="9"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[orig_lng]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[orig_lng]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[orig_place]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="orig_place"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[orig_place]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[orig_place]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[orig_description]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="orig_description"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[orig_description]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[orig_description]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[dest_lat]"
+                      cachedDataType="numeric"
+                      cachedName="dest_lat"
+                      cachedPrecision="9"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[dest_lat]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[dest_lat]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[dest_lng]"
+                      cachedDataType="numeric"
+                      cachedName="dest_lng"
+                      cachedPrecision="9"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[dest_lng]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[dest_lng]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[dest_place]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="dest_place"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[dest_place]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[dest_place]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[dest_description]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="dest_description"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[dest_description]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[dest_description]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[service_sk]"
+                      cachedDataType="i4"
+                      cachedName="service_sk"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[service_sk]"
+                      lineageId="Package\Load Services\Lookup.Outputs[Lookup Match Output].Columns[service_sk]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[price_per_person]"
+                      cachedDataType="numeric"
+                      cachedName="price_per_person"
+                      cachedPrecision="10"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[price]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[price_per_person]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[children]"
+                      cachedDataType="bool"
+                      cachedName="children"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[children_allowed]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[children]" />
+                    <inputColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].Columns[languages_available]"
+                      cachedCodepage="1252"
+                      cachedDataType="text"
+                      cachedName="languages_available"
+                      externalMetadataColumnId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[languages_availables]"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[languages_available]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[service_sk]"
+                      dataType="i4"
+                      name="service_sk" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[start_time]"
+                      dataType="dbTimeStamp"
+                      name="start_time" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[end_time]"
+                      dataType="dbTimeStamp"
+                      name="end_time" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[seasonality]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="seasonality" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[price]"
+                      dataType="numeric"
+                      name="price"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[max_group_size]"
+                      dataType="i4"
+                      name="max_group_size" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[min_group_size]"
+                      dataType="i4"
+                      name="min_group_size" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[children_allowed]"
+                      dataType="bool"
+                      name="children_allowed" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[service_type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="service_type" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[route_name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="route_name" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[description]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="description" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[distance_km]"
+                      dataType="numeric"
+                      name="distance_km"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[duration_hours]"
+                      dataType="numeric"
+                      name="duration_hours"
+                      precision="10"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[difficulty_level]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="difficulty_level" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[transport_mode]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="transport_mode" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[available_guides]"
+                      dataType="bool"
+                      name="available_guides" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[languages_availables]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="languages_availables" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[route_type]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="route_type" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[orig_lat]"
+                      dataType="numeric"
+                      name="orig_lat"
+                      precision="9"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[orig_lng]"
+                      dataType="numeric"
+                      name="orig_lng"
+                      precision="9"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[orig_place]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="orig_place" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[orig_description]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="orig_description" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[dest_lat]"
+                      dataType="numeric"
+                      name="dest_lat"
+                      precision="9"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[dest_lng]"
+                      dataType="numeric"
+                      name="dest_lng"
+                      precision="9"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[dest_place]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="dest_place" />
+                    <externalMetadataColumn
+                      refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[dest_description]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="dest_description" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Services\Load staging.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Services\Load staging.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Services\Load staging.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Services\Load staging.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Services\Load staging.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Services\Lookup"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[DimDailyService]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[DimDailyService]) [refTable]
+where [refTable].[service_id] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="service_sk" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="service_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="start_time" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="end_time" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="seasonality" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="price" dataType="DT_NUMERIC" length="0" precision="10" scale="2" codePage="0"/&gt;&lt;referenceColumn name="max_group_size" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="min_group_size" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="children_allowed" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="service_type" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="route_name" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="description" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="distance_km" dataType="DT_NUMERIC" length="0" precision="10" scale="2" codePage="0"/&gt;&lt;referenceColumn name="duration_hours" dataType="DT_NUMERIC" length="0" precision="10" scale="2" codePage="0"/&gt;&lt;referenceColumn name="difficulty_level" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="transport_mode" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="available_guides" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="languages_availables" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="route_type" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="orig_lat" dataType="DT_NUMERIC" length="0" precision="9" scale="6" codePage="0"/&gt;&lt;referenceColumn name="orig_lng" dataType="DT_NUMERIC" length="0" precision="9" scale="6" codePage="0"/&gt;&lt;referenceColumn name="orig_place" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="orig_description" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="dest_lat" dataType="DT_NUMERIC" length="0" precision="9" scale="6" codePage="0"/&gt;&lt;referenceColumn name="dest_lng" dataType="DT_NUMERIC" length="0" precision="9" scale="6" codePage="0"/&gt;&lt;referenceColumn name="dest_place" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="dest_description" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[service_id]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Services\Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Target.TuryBusDW]"
+                  connectionManagerRefId="Package.ConnectionManagers[Target.TuryBusDW]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Services\Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Services\Lookup.Inputs[Lookup Input].Columns[service_id]"
+                      cachedDataType="i4"
+                      cachedName="service_id"
+                      lineageId="Package\Load Services\Get Services.Outputs[OLE DB Source Output].Columns[service_id]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">service_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Services\Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Load Services\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Services\Lookup.Outputs[Lookup Match Output].Columns[service_sk]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Load Services\Lookup.Outputs[Lookup Match Output].Columns[service_sk]"
+                      name="service_sk"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">service_sk</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Services\Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Load Services\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Services\Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Load Services\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Services\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Services\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Services\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Services\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Services.Paths[Lookup Match Output]"
+              endId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input]"
+              name="Lookup Match Output"
+              startId="Package\Load Services\Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Load Services.Paths[Lookup No Match Output]"
+              endId="Package\Load Services\Load Dim.Inputs[OLE DB Destination Input]"
+              name="Lookup No Match Output"
+              startId="Package\Load Services\Lookup.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\Load Services.Paths[OLE DB Source Output]"
+              endId="Package\Load Services\Lookup.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load Services\Get Services.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sync Staging"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarea Ejecutar SQL"
+      DTS:DTSID="{B2B86083-21CE-4473-BC1D-AACE2E913EEB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sync Staging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7F584B5F-CCC6-4430-9154-86AC3E24748E}"
+          SQLTask:SqlStatementSource="EXECUTE [dbo].[DW_MergeDimDailyService] " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update config"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Tarea Ejecutar SQL"
+      DTS:DTSID="{C9B0EDC6-373C-4B9C-A8D4-11BA6100478F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update config"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7F584B5F-CCC6-4430-9154-86AC3E24748E}"
+          SQLTask:SqlStatementSource="EXECUTE [dbo].[UpdateLastPackageRowVersion] &#xA;   @tableName = 'service'&#xA;  ,@lastRowVersion = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::dbts"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restricción]"
+      DTS:CreationName=""
+      DTS:DTSID="{1D5008D2-9086-49D7-A749-917EF8D63554}"
+      DTS:From="Package\Get Database RowVersion"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restricción"
+      DTS:To="Package\Get LastRowVersion" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restricción 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{96DE4208-E480-4C40-9550-49C71E23B868}"
+      DTS:From="Package\Get LastRowVersion"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restricción 1"
+      DTS:To="Package\Clean-up staging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restricción 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{B4700BB5-85D4-4EE2-B9BA-2FC9C2A9FF1E}"
+      DTS:From="Package\Clean-up staging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restricción 2"
+      DTS:To="Package\Load Services" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restricción 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{78F5492B-8BB8-4BDE-87FB-E59E2D00EF27}"
+      DTS:From="Package\Load Services"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restricción 3"
+      DTS:To="Package\Sync Staging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Restricción 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{BFC426A9-9422-429A-92F5-F054DE2BCBAD}"
+      DTS:From="Package\Sync Staging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Restricción 4"
+      DTS:To="Package\Update config" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--Esta sección CDATA contiene la información de diseño del paquete. Esta sección incluye información como, por ejemplo, las coordenadas (x,y), el ancho y el alto.-->
+<!--Si edita manualmente esta sección y comete un error, puede eliminarlo. -->
+<!--El paquete podrá cargarse normalmente, pero se perderá la información de diseño anterior y el diseñador reorganizará los elementos automáticamente en la superficie de diseño.-->
+<Objects
+  Version="8">
+  <!--Cada uno de los nodos siguientes contiene propiedades que no afectan al comportamiento en tiempo de ejecución.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="173.6,41.6"
+          Id="Package\Get Database RowVersion"
+          TopLeft="443.589753250517,41.4695327943571" />
+        <NodeLayout
+          Size="177.6,41.6"
+          Id="Package\Get LastRowVersion"
+          TopLeft="443.162402813859,141.648741230164" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción]"
+          TopLeft="531.176078032188,83.0695327943571">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,58.5792084358066"
+              Start="0,0"
+              End="0,51.0792084358066">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.0792084358066" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="160,41.6"
+          Id="Package\Clean-up staging"
+          TopLeft="450.854710673694,246.487447732752" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción 1]"
+          TopLeft="531.408556743777,183.248741230164">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,63.2387065025881"
+              Start="0,0"
+              End="0,55.7387065025881">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.7387065025881" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="147.2,41.6"
+          Id="Package\Load Services"
+          TopLeft="462.393172463448,347.333325022331" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción 2]"
+          TopLeft="533.423941568571,288.087447732752">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.2458772895791"
+              Start="0,0"
+              End="0,51.7458772895791">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.7458772895791" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="144.8,41.6"
+          Id="Package\Update config"
+          TopLeft="466.239326393365,542.057332614496" />
+        <NodeLayout
+          Size="142.4,41.6"
+          Id="Package\Sync Staging"
+          TopLeft="462.820522900105,451.878128990323" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción 3]"
+          TopLeft="535.006847681777,388.933325022331">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,62.9448039679917"
+              Start="0,0"
+              End="0,55.4448039679917">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.4448039679917" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Restricción 4]"
+          TopLeft="536.329924646735,493.478128990323">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48.5792036241731"
+              Start="0,0"
+              End="0,41.0792036241731">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.0792036241731" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load Services">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="140,41.6"
+          Id="Package\Load Services\Get Services"
+          TopLeft="508.999992415309,45.333332657814" />
+        <NodeLayout
+          Size="114.4,41.6"
+          Id="Package\Load Services\Lookup"
+          TopLeft="523.999992187534,154.285711986678" />
+        <EdgeLayout
+          Id="Package\Load Services.Paths[OLE DB Source Output]"
+          TopLeft="580.099992301422,86.933332657814">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,67.3523793288641"
+              Start="0,0"
+              End="0,59.8523793288641">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,59.8523793288641" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="140,41.6"
+          Id="Package\Load Services\Load staging"
+          TopLeft="337.499994970858,252.999996230006" />
+        <EdgeLayout
+          Id="Package\Load Services.Paths[Lookup Match Output]"
+          TopLeft="581.199992187534,195.885711986678">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-173.699997216676,57.1142842433282"
+              Start="0,0"
+              End="-173.699997216676,49.6142842433282">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.5571421216641" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.5571421216641"
+                    Point2="0,28.5571421216641"
+                    Point3="-4,28.5571421216641" />
+                  <mssgle:LineSegment
+                    End="-169.699997216676,28.5571421216641" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-169.699997216676,28.5571421216641"
+                    Point2="-173.699997216676,28.5571421216641"
+                    Point3="-173.699997216676,32.5571421216641" />
+                  <mssgle:LineSegment
+                    End="-173.699997216676,49.6142842433282" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-135.041385327088,33.5571421216641,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="124.8,41.6"
+          Id="Package\Load Services\Load Dim"
+          TopLeft="687.999989748002,252.999996230006" />
+        <EdgeLayout
+          Id="Package\Load Services.Paths[Lookup No Match Output]"
+          TopLeft="598.933325520868,195.885711986678">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="151.466664227134,57.1142842433283"
+              Start="0,0"
+              End="151.466664227134,49.6142842433283">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.8183835837428" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.8183835837428"
+                    Point2="0,26.8183835837428"
+                    Point3="4,26.8183835837428" />
+                  <mssgle:LineSegment
+                    End="147.466664227134,26.8183835837428" />
+                  <mssgle:CubicBezierSegment
+                    Point1="147.466664227134,26.8183835837428"
+                    Point2="151.466664227134,26.8183835837428"
+                    Point3="151.466664227134,30.8183835837428" />
+                  <mssgle:LineSegment
+                    End="151.466664227134,49.6142842433283" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="19.926945394817,31.8183835837428,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Services\Get Services">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Services\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DimDailyService]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Services\Load staging">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Services\Load Dim">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
