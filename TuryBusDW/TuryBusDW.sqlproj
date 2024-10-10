@@ -77,6 +77,7 @@
     <Build Include="Schema\Programmability\Stored Procedures\GetLastPackageRowVersion.sql" />
     <Build Include="Schema\Programmability\Stored Procedures\UpdateLastPackageRowVersion.sql" />
     <Build Include="Schema\Programmability\Stored Procedures\DW_MergeDimCustomer.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\DW_MergeFactBooking.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TuryBusDW.publish.xml" />
