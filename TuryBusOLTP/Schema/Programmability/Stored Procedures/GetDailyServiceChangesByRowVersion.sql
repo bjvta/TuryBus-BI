@@ -30,7 +30,7 @@ BEGIN
 			,dest_lat=loe.lat
 			,dest_lng=loe.lng
 			,dest_place=loe.place
-			,des_description=loe.description
+			,dest_description=loe.description
 	FROM [tourist].[daily_service]	dse
 	INNER JOIN [tourist].[tourist_route]	tro ON (dse.tourist_route_id = tro.id)
 	LEFT JOIN [tourist].[location]			los ON (tro.origin_id = los.id)
