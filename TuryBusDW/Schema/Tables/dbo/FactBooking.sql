@@ -2,6 +2,7 @@
 (
     date_id INT NOT NULL,
     customer_id INT NOT NULL,
+    booking_id INT NOT NULL,
     booking_status INT NOT NULL,
     payment_status INT NOT NULL,
     daily_service_id INT NOT NULL,
