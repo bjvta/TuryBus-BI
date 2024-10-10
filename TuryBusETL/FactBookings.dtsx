@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="19"
-  DTS:VersionGUID="{0A6810C8-6DDE-49A9-A831-A03E28BB838A}">
+  DTS:VersionBuild="26"
+  DTS:VersionGUID="{CD45EA3E-45FB-409F-91A3-E5D301299530}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -220,6 +220,12 @@
                       cachedName="number_of_people"
                       externalMetadataColumnId="Package\Add Bookings\Add New Booking.Inputs[OLE DB Destination Input].ExternalColumns[number_of_people]"
                       lineageId="Package\Add Bookings\Get Bookings.Outputs[OLE DB Source Output].Columns[number_of_people]" />
+                    <inputColumn
+                      refId="Package\Add Bookings\Add New Booking.Inputs[OLE DB Destination Input].Columns[booking_id]"
+                      cachedDataType="i4"
+                      cachedName="booking_id"
+                      externalMetadataColumnId="Package\Add Bookings\Add New Booking.Inputs[OLE DB Destination Input].ExternalColumns[booking_id]"
+                      lineageId="Package\Add Bookings\Get Bookings.Outputs[OLE DB Source Output].Columns[booking_id]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -271,6 +277,10 @@
                       refId="Package\Add Bookings\Add New Booking.Inputs[OLE DB Destination Input].ExternalColumns[number_of_people]"
                       dataType="i4"
                       name="number_of_people" />
+                    <externalMetadataColumn
+                      refId="Package\Add Bookings\Add New Booking.Inputs[OLE DB Destination Input].ExternalColumns[booking_id]"
+                      dataType="i4"
+                      name="booking_id" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -765,6 +775,12 @@
                       cachedName="booking_status"
                       externalMetadataColumnId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[booking_status_id]"
                       lineageId="Package\Add Bookings\Get Bookings.Outputs[OLE DB Source Output].Columns[booking_status]" />
+                    <inputColumn
+                      refId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].Columns[booking_id]"
+                      cachedDataType="i4"
+                      cachedName="booking_id"
+                      externalMetadataColumnId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[booking_id]"
+                      lineageId="Package\Add Bookings\Get Bookings.Outputs[OLE DB Source Output].Columns[booking_id]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -816,6 +832,10 @@
                       refId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[number_of_people]"
                       dataType="i4"
                       name="number_of_people" />
+                    <externalMetadataColumn
+                      refId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[booking_id]"
+                      dataType="i4"
+                      name="booking_id" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -865,7 +885,7 @@
                   expressionType="Notify"
                   name="SqlCommandParam"
                   UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[FactBooking]) [refTable]
-where [refTable].[daily_service_id] = ? and [refTable].[date_id] = ?</property>
+where [refTable].[booking_id] = ? and [refTable].[date_id] = ?</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the type of connection used to access the reference dataset."
@@ -896,12 +916,12 @@ where [refTable].[daily_service_id] = ? and [refTable].[date_id] = ?</property>
                 <property
                   dataType="System.String"
                   description="Indicates whether to reference metadata in an XML format."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="date_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="customer_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="booking_status" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="payment_status" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="daily_service_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="price" dataType="DT_NUMERIC" length="0" precision="10" scale="2" codePage="0"/&gt;&lt;referenceColumn name="currency" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="special_request" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="booking_number" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="number_of_people" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="date_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="customer_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="booking_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="booking_status" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="payment_status" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="daily_service_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="price" dataType="DT_NUMERIC" length="0" precision="10" scale="2" codePage="0"/&gt;&lt;referenceColumn name="currency" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="special_request" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="booking_number" dataType="DT_STR" length="255" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="number_of_people" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                 <property
                   containsID="true"
                   dataType="System.String"
                   description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
-                  name="ParameterMap">#{Package\Add Bookings\Get Bookings.Outputs[OLE DB Source Output].Columns[daily_service_id]};#{Package\Add Bookings\Get Bookings.Outputs[OLE DB Source Output].Columns[date_id]};</property>
+                  name="ParameterMap">#{Package\Add Bookings\Get Bookings.Outputs[OLE DB Source Output].Columns[booking_id]};#{Package\Add Bookings\Get Bookings.Outputs[OLE DB Source Output].Columns[date_id]};</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -925,6 +945,22 @@ where [refTable].[daily_service_id] = ? and [refTable].[date_id] = ?</property>
                   name="Lookup Input">
                   <inputColumns>
                     <inputColumn
+                      refId="Package\Add Bookings\Lookup Bookings.Inputs[Lookup Input].Columns[booking_id]"
+                      cachedDataType="i4"
+                      cachedName="booking_id"
+                      lineageId="Package\Add Bookings\Get Bookings.Outputs[OLE DB Source Output].Columns[booking_id]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">booking_id</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
                       refId="Package\Add Bookings\Lookup Bookings.Inputs[Lookup Input].Columns[date_id]"
                       cachedDataType="i4"
                       cachedName="date_id"
@@ -934,22 +970,6 @@ where [refTable].[daily_service_id] = ? and [refTable].[date_id] = ?</property>
                           dataType="System.String"
                           description="Specifies the column in the reference table that a column joins."
                           name="JoinToReferenceColumn">date_id</property>
-                        <property
-                          dataType="System.Null"
-                          description="Specifies the column in the reference table from which a column is copied."
-                          name="CopyFromReferenceColumn" />
-                      </properties>
-                    </inputColumn>
-                    <inputColumn
-                      refId="Package\Add Bookings\Lookup Bookings.Inputs[Lookup Input].Columns[daily_service_id]"
-                      cachedDataType="i4"
-                      cachedName="daily_service_id"
-                      lineageId="Package\Add Bookings\Get Bookings.Outputs[OLE DB Source Output].Columns[daily_service_id]">
-                      <properties>
-                        <property
-                          dataType="System.String"
-                          description="Specifies the column in the reference table that a column joins."
-                          name="JoinToReferenceColumn">daily_service_id</property>
                         <property
                           dataType="System.Null"
                           description="Specifies the column in the reference table from which a column is copied."
@@ -1362,7 +1382,7 @@ where [refTable].[service_id] = ?</property>
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{5BE88717-04D2-48E0-BAB1-176BDDE6629E}"
-          SQLTask:SqlStatementSource="TRUNCATE TABLE staging.bookings;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="TRUNCATE TABLE staging.booking;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -1379,7 +1399,7 @@ where [refTable].[service_id] = ?</property>
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{5BE88717-04D2-48E0-BAB1-176BDDE6629E}"
-          SQLTask:SqlStatementSource="EXECUTE [dbo].[GetLastPackageRowVersion] @tableName = 'bookings'"
+          SQLTask:SqlStatementSource="EXECUTE [dbo].[GetLastPackageRowVersion] @tableName = 'booking'"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ResultBinding
             SQLTask:ResultName="LastRowVersion"
@@ -1421,7 +1441,9 @@ where [refTable].[service_id] = ?</property>
       DTS:ThreadHint="0">
       <DTS:Variables />
       <DTS:ObjectData>
-        <SQLTask:SqlTaskData xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5BE88717-04D2-48E0-BAB1-176BDDE6629E}"
+          SQLTask:SqlStatementSource="EXECUTE [dbo].[DW_MergeFactBooking] " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -1526,7 +1548,7 @@ where [refTable].[service_id] = ?</property>
         <NodeLayout
           Size="147,42"
           Id="Package\Update config"
-          TopLeft="343,463" />
+          TopLeft="347,467" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="438.25,82">
@@ -1617,18 +1639,18 @@ where [refTable].[service_id] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="420.25,419">
+          TopLeft="422.25,419">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,44"
+              EndConnector="0,48"
               Start="0,0"
-              End="0,36.5">
+              End="0,40.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,36.5" />
+                    End="0,40.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1646,135 +1668,29 @@ where [refTable].[service_id] = ?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
+          Size="166,42"
+          Id="Package\Add Bookings\Lookup Customer"
+          TopLeft="330,162" />
+        <NodeLayout
+          Size="144,42"
+          Id="Package\Add Bookings\Load Staging"
+          TopLeft="181,435" />
+        <NodeLayout
           Size="145,42"
           Id="Package\Add Bookings\Get Bookings"
           TopLeft="345,73" />
         <NodeLayout
           Size="166,42"
-          Id="Package\Add Bookings\Lookup Customer"
-          TopLeft="330,162" />
-        <EdgeLayout
-          Id="Package\Add Bookings.Paths[OLE DB Source Output]"
-          TopLeft="415.25,115">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,47"
-              Start="0,0"
-              End="0,39.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,39.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="179,42"
-          Id="Package\Add Bookings\Lookup DailyService"
-          TopLeft="324,247" />
-        <EdgeLayout
-          Id="Package\Add Bookings.Paths[Lookup Match Output]"
-          TopLeft="413.25,204">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,43"
-              Start="0,0"
-              End="0,35.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,35.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,11.9453125,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          Id="Package\Add Bookings\Add New Booking"
+          TopLeft="506,431" />
         <NodeLayout
           Size="163,42"
           Id="Package\Add Bookings\Lookup Bookings"
           TopLeft="327,336" />
-        <EdgeLayout
-          Id="Package\Add Bookings.Paths[Lookup Match Output1]"
-          TopLeft="411,289">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,47"
-              Start="0,0"
-              End="0,39.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,39.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,13.9453125,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <NodeLayout
-          Size="144,42"
-          Id="Package\Add Bookings\Load Staging"
-          TopLeft="181,435" />
-        <EdgeLayout
-          Id="Package\Add Bookings.Paths[Lookup Match Output2]"
-          TopLeft="408.5,378">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-155.5,57"
-              Start="0,0"
-              End="-155.5,49.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,24.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,24.5"
-                    Point2="0,28.5"
-                    Point3="-4,28.5" />
-                  <mssgle:LineSegment
-                    End="-151.5,28.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-151.5,28.5"
-                    Point2="-155.5,28.5"
-                    Point3="-155.5,32.5" />
-                  <mssgle:LineSegment
-                    End="-155.5,49.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-125.94138671875,33.5,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="166,42"
-          Id="Package\Add Bookings\Add New Booking"
-          TopLeft="506,431" />
+          Size="179,42"
+          Id="Package\Add Bookings\Lookup DailyService"
+          TopLeft="324,247" />
         <EdgeLayout
           Id="Package\Add Bookings.Paths[Lookup No Match Output]"
           TopLeft="434.333333333333,378">
@@ -1811,6 +1727,112 @@ where [refTable].[service_id] = ?</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Add Bookings.Paths[Lookup Match Output2]"
+          TopLeft="408.5,378">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-155.5,57"
+              Start="0,0"
+              End="-155.5,49.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.5"
+                    Point2="0,28.5"
+                    Point3="-4,28.5" />
+                  <mssgle:LineSegment
+                    End="-151.5,28.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-151.5,28.5"
+                    Point2="-155.5,28.5"
+                    Point3="-155.5,32.5" />
+                  <mssgle:LineSegment
+                    End="-155.5,49.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-125.94138671875,33.5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Add Bookings.Paths[Lookup Match Output1]"
+          TopLeft="411,289">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47"
+              Start="0,0"
+              End="0,39.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,13.9453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Add Bookings.Paths[Lookup Match Output]"
+          TopLeft="413.25,204">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43"
+              Start="0,0"
+              End="0,35.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,11.9453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Add Bookings.Paths[OLE DB Source Output]"
+          TopLeft="415.25,115">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47"
+              Start="0,0"
+              End="0,39.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
@@ -1820,7 +1842,7 @@ where [refTable].[service_id] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -1830,7 +1852,7 @@ where [refTable].[service_id] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -1877,7 +1899,7 @@ where [refTable].[service_id] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -1887,7 +1909,7 @@ where [refTable].[service_id] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
