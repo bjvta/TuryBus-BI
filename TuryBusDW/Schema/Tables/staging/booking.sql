@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [staging].[booking]
 (
 	date_id INT NOT NULL,
+    booking_id INT NOT NULL,
     customer_id INT NOT NULL,
     booking_status_id INT NOT NULL,
     payment_status_id INT NOT NULL,

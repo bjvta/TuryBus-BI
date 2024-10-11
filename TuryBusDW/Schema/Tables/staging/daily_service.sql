@@ -18,8 +18,12 @@
     available_guides BIT NOT NULL,
     languages_availables VARCHAR(255) NOT NULL,
     route_type VARCHAR(255) NOT NULL,
-    location_lat DECIMAL(9,6) NOT NULL,
-    location_lng DECIMAL(9,6) NOT NULL,
-    location_place VARCHAR(255) NOT NULL,
-    location_description VARCHAR(255) NOT NULL
+    orig_lat DECIMAL(9,6) NOT NULL,
+    orig_lng DECIMAL(9,6) NOT NULL,
+    orig_place VARCHAR(255) NOT NULL,
+    orig_description VARCHAR(255) NOT NULL,
+    dest_lat DECIMAL(9,6) NOT NULL,
+    dest_lng DECIMAL(9,6) NOT NULL,
+    dest_place VARCHAR(255) NOT NULL,
+    dest_description VARCHAR(255) NOT NULL
 )

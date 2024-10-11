@@ -89,6 +89,7 @@
     <Build Include="Schema\Programmability\Stored Procedures\GetDatabaseRowVersion.sql" />
     <Build Include="Schema\Programmability\Stored Procedures\GetCustomerChangesByRowVersion.sql" />
     <Build Include="Schema\Programmability\Stored Procedures\GetBookingChangesByRowVersion.sql" />
+    <Build Include="Schema\Programmability\Stored Procedures\GetDailyServiceChangesByRowVersion.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
