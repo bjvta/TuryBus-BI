@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="26"
-  DTS:VersionGUID="{CD45EA3E-45FB-409F-91A3-E5D301299530}">
+  DTS:VersionBuild="27"
+  DTS:VersionGUID="{F6C70841-FEC8-4342-B011-609AEF8FB1F7}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -760,27 +760,27 @@
                       externalMetadataColumnId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[number_of_people]"
                       lineageId="Package\Add Bookings\Get Bookings.Outputs[OLE DB Source Output].Columns[number_of_people]" />
                     <inputColumn
-                      refId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].Columns[payment_status]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="255"
-                      cachedName="payment_status"
-                      externalMetadataColumnId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[payment_status_id]"
-                      lineageId="Package\Add Bookings\Get Bookings.Outputs[OLE DB Source Output].Columns[payment_status]" />
+                      refId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].Columns[booking_id]"
+                      cachedDataType="i4"
+                      cachedName="booking_id"
+                      externalMetadataColumnId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[booking_id]"
+                      lineageId="Package\Add Bookings\Get Bookings.Outputs[OLE DB Source Output].Columns[booking_id]" />
                     <inputColumn
                       refId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].Columns[booking_status]"
                       cachedCodepage="1252"
                       cachedDataType="str"
                       cachedLength="255"
                       cachedName="booking_status"
-                      externalMetadataColumnId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[booking_status_id]"
+                      externalMetadataColumnId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[booking_status]"
                       lineageId="Package\Add Bookings\Get Bookings.Outputs[OLE DB Source Output].Columns[booking_status]" />
                     <inputColumn
-                      refId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].Columns[booking_id]"
-                      cachedDataType="i4"
-                      cachedName="booking_id"
-                      externalMetadataColumnId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[booking_id]"
-                      lineageId="Package\Add Bookings\Get Bookings.Outputs[OLE DB Source Output].Columns[booking_id]" />
+                      refId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].Columns[payment_status]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="255"
+                      cachedName="payment_status"
+                      externalMetadataColumnId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[payment_status]"
+                      lineageId="Package\Add Bookings\Get Bookings.Outputs[OLE DB Source Output].Columns[payment_status]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -792,14 +792,6 @@
                       refId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[customer_id]"
                       dataType="i4"
                       name="customer_id" />
-                    <externalMetadataColumn
-                      refId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[booking_status_id]"
-                      dataType="i4"
-                      name="booking_status_id" />
-                    <externalMetadataColumn
-                      refId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[payment_status_id]"
-                      dataType="i4"
-                      name="payment_status_id" />
                     <externalMetadataColumn
                       refId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[daily_service_id]"
                       dataType="i4"
@@ -836,6 +828,18 @@
                       refId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[booking_id]"
                       dataType="i4"
                       name="booking_id" />
+                    <externalMetadataColumn
+                      refId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[booking_status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="booking_status" />
+                    <externalMetadataColumn
+                      refId="Package\Add Bookings\Load Staging.Inputs[OLE DB Destination Input].ExternalColumns[payment_status]"
+                      codePage="1252"
+                      dataType="str"
+                      length="255"
+                      name="payment_status" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -1668,22 +1672,6 @@ where [refTable].[service_id] = ?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="166,42"
-          Id="Package\Add Bookings\Lookup Customer"
-          TopLeft="330,162" />
-        <NodeLayout
-          Size="144,42"
-          Id="Package\Add Bookings\Load Staging"
-          TopLeft="181,435" />
-        <NodeLayout
-          Size="145,42"
-          Id="Package\Add Bookings\Get Bookings"
-          TopLeft="345,73" />
-        <NodeLayout
-          Size="166,42"
-          Id="Package\Add Bookings\Add New Booking"
-          TopLeft="506,431" />
-        <NodeLayout
           Size="163,42"
           Id="Package\Add Bookings\Lookup Bookings"
           TopLeft="327,336" />
@@ -1691,6 +1679,44 @@ where [refTable].[service_id] = ?</property>
           Size="179,42"
           Id="Package\Add Bookings\Lookup DailyService"
           TopLeft="324,247" />
+        <NodeLayout
+          Size="145,42"
+          Id="Package\Add Bookings\Get Bookings"
+          TopLeft="345,73" />
+        <NodeLayout
+          Size="144,42"
+          Id="Package\Add Bookings\Load Staging"
+          TopLeft="181,435" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Add Bookings\Add New Booking"
+          TopLeft="506,431" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Add Bookings\Lookup Customer"
+          TopLeft="330,162" />
+        <EdgeLayout
+          Id="Package\Add Bookings.Paths[OLE DB Source Output]"
+          TopLeft="415.25,115">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47"
+              Start="0,0"
+              End="0,39.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Add Bookings.Paths[Lookup No Match Output]"
           TopLeft="434.333333333333,378">
@@ -1723,7 +1749,7 @@ where [refTable].[service_id] = ?</property>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="21.5269466145833,26.5091130012151,111.6127734375,11.609375"
+              BoundingBox="21.5269466145835,26.5091130012151,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -1811,49 +1837,58 @@ where [refTable].[service_id] = ?</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Add Bookings.Paths[OLE DB Source Output]"
-          TopLeft="415.25,115">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,47"
-              Start="0,0"
-              End="0,39.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,39.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Add Bookings\Lookup Customer">
+    design-time-name="Package\Add Bookings\Lookup Bookings">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">[dbo].[DimCustomer]</Value>
+          type="q3:string">[dbo].[FactBooking]</Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Add Bookings\Lookup DailyService">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[DimDailyService]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Add Bookings\Get Bookings">
+    <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
@@ -1873,14 +1908,6 @@ where [refTable].[service_id] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Add Bookings\Get Bookings">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Add Bookings\Add New Booking">
     <Properties>
       <Property>
@@ -1894,30 +1921,7 @@ where [refTable].[service_id] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Add Bookings\Lookup Bookings">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[FactBooking]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Add Bookings\Lookup DailyService">
+    design-time-name="Package\Add Bookings\Lookup Customer">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
@@ -1927,7 +1931,7 @@ where [refTable].[service_id] = ?</property>
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">[dbo].[DimDailyService]</Value>
+          type="q3:string">[dbo].[DimCustomer]</Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>

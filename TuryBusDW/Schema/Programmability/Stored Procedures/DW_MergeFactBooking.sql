@@ -6,15 +6,15 @@ BEGIN
 	SET [date_id] = sc.[date_id]
       ,[customer_id] = sc.[customer_id]
       ,[booking_id] = sc.[booking_id]
-      ,[booking_status] = sc.[booking_number]
-      ,[payment_status] = sc.[payment_status_id]
-      ,[daily_service_id] = sc.[daily_service_id]
-      ,[price] = sc.[price]
-      ,[currency] = sc.[currency]
-      ,[special_request] = sc.[special_request]
-      ,[booking_number] = sc.[booking_number]
-      ,[number_of_people] = sc.[number_of_people]
-	FROM [dbo].[FactBooking]	dc
-	INNER JOIN [staging].[booking] sc ON (dc.[booking_id] = sc.[booking_id])
+      ,[booking_status] = sb.[booking_status]
+      ,[payment_status] = sb.[payment_status]
+      ,[daily_service_id] = sb.[daily_service_id]
+      ,[price] = sb.[price]
+      ,[currency] = sb.[currency]
+      ,[special_request] = sb.[special_request]
+      ,[booking_number] = sb.[booking_number]
+      ,[number_of_people] = sb.[number_of_people]
+	FROM [dbo].[FactBooking]	fb
+	INNER JOIN [staging].[booking] sb ON (fb.[booking_id] = sb.[booking_id])
 END
 GO

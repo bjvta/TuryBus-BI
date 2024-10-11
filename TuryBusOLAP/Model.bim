@@ -23,6 +23,7 @@
           {
             "name": "customer_sk",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "customer_sk",
             "sourceProviderType": "Integer"
           },
@@ -122,6 +123,7 @@
           {
             "name": "service_sk",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "service_sk",
             "sourceProviderType": "Integer"
           },
@@ -135,6 +137,7 @@
           {
             "name": "start_time",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "start_time",
             "formatString": "General Date",
             "sourceProviderType": "DBTimeStamp"
@@ -142,6 +145,7 @@
           {
             "name": "end_time",
             "dataType": "dateTime",
+            "isHidden": true,
             "sourceColumn": "end_time",
             "formatString": "General Date",
             "sourceProviderType": "DBTimeStamp"
@@ -414,6 +418,7 @@
           {
             "name": "customer_id",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "customer_id",
             "sourceProviderType": "Integer"
           },

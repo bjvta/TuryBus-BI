@@ -22,7 +22,7 @@ BEGIN
 		  ,b.payment_status
 		  ,b.price
 		  ,b.currency
-		  ,b.special_request
+		  ,special_request=ISNULL(b.special_request, 'No')
 		  ,b.booking_number
 		  ,b.number_of_people
 	FROM [financial].[booking]            b

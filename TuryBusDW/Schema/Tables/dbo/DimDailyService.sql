@@ -17,7 +17,7 @@
     difficulty_level VARCHAR(255) NOT NULL,
     transport_mode VARCHAR(255) NOT NULL,
     available_guides BIT NOT NULL,
-    languages_availables VARCHAR(255) NOT NULL,
+    languages_availables TEXT NOT NULL,
     route_type VARCHAR(255) NOT NULL,
     orig_lat DECIMAL(9,6) NOT NULL,
     orig_lng DECIMAL(9,6) NOT NULL,
