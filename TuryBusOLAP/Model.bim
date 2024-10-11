@@ -6,7 +6,18 @@
     "dataSources": [
       {
         "name": "SqlServer localhost TuryBusDW",
-        "connectionString": "Provider=MSOLEDBSQL;Data Source=localhost;Persist Security Info=true;User ID=sa;Initial Catalog=TuryBusDW",
+        "connectionString": "Provider=SQLNCLI11;Data Source=localhost;Initial Catalog=TuryBusDW;Integrated Security=SSPI;Persist Security Info=false",
+        "impersonationMode": "impersonateCurrentUser",
+        "annotations": [
+          {
+            "name": "ConnectionEditUISource",
+            "value": "SqlServer"
+          }
+        ]
+      },
+      {
+        "name": "SqlServer localhost TuryBusDW 2",
+        "connectionString": "Provider=SQLNCLI11;Data Source=localhost;Initial Catalog=TuryBusDW;User ID=sa;Persist Security Info=false",
         "impersonationMode": "impersonateServiceAccount",
         "annotations": [
           {
@@ -81,14 +92,7 @@
             "name": "full_name",
             "dataType": "string",
             "isDataTypeInferred": true,
-            "expression": "CONCATENATE(CONCATENATE(DimCustomer[name], \" \"), DimCustomer[last_name])"
-          },
-          {
-            "type": "calculated",
-            "name": "age",
-            "dataType": "int64",
-            "isDataTypeInferred": true,
-            "expression": "DATEDIFF([birthdate], TODAY(), YEAR)"
+            "expression": "CONCATENATE(CONCATENATE([name], \" \"), [last_name])"
           }
         ],
         "partitions": [
@@ -98,7 +102,7 @@
             "source": {
               "type": "query",
               "query": " \t\t\t\tSELECT [dbo].[DimCustomer].*   FROM [dbo].[DimCustomer] ",
-              "dataSource": "SqlServer localhost TuryBusDW"
+              "dataSource": "SqlServer localhost TuryBusDW 2"
             }
           }
         ],
@@ -206,6 +210,7 @@
           {
             "name": "distance_km",
             "dataType": "double",
+            "isHidden": true,
             "sourceColumn": "distance_km",
             "sourceProviderType": "Numeric"
           },
@@ -224,6 +229,7 @@
           {
             "name": "transport_mode",
             "dataType": "string",
+            "isHidden": true,
             "sourceColumn": "transport_mode",
             "sourceProviderType": "Char"
           },
@@ -249,31 +255,59 @@
             "sourceProviderType": "Char"
           },
           {
-            "name": "location_lat",
+            "name": "orig_lat",
             "dataType": "double",
             "isHidden": true,
-            "sourceColumn": "location_lat",
+            "sourceColumn": "orig_lat",
             "sourceProviderType": "Numeric"
           },
           {
-            "name": "location_lng",
+            "name": "orig_lng",
             "dataType": "double",
             "isHidden": true,
-            "sourceColumn": "location_lng",
+            "sourceColumn": "orig_lng",
             "sourceProviderType": "Numeric"
           },
           {
-            "name": "location_place",
+            "name": "orig_place",
             "dataType": "string",
             "isHidden": true,
-            "sourceColumn": "location_place",
+            "sourceColumn": "orig_place",
             "sourceProviderType": "Char"
           },
           {
-            "name": "location_description",
+            "name": "orig_description",
             "dataType": "string",
             "isHidden": true,
-            "sourceColumn": "location_description",
+            "sourceColumn": "orig_description",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "dest_lat",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "dest_lat",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "dest_lng",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "dest_lng",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "dest_place",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "dest_place",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "dest_description",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "dest_description",
             "sourceProviderType": "Char"
           }
         ],
@@ -284,7 +318,7 @@
             "source": {
               "type": "query",
               "query": " \t\t\t\tSELECT [dbo].[DimDailyService].*   FROM [dbo].[DimDailyService] ",
-              "dataSource": "SqlServer localhost TuryBusDW"
+              "dataSource": "SqlServer localhost TuryBusDW 2"
             }
           }
         ],
@@ -387,7 +421,7 @@
             "source": {
               "type": "query",
               "query": " \t\t\t\tSELECT [dbo].[DimDate].*   FROM [dbo].[DimDate] ",
-              "dataSource": "SqlServer localhost TuryBusDW"
+              "dataSource": "SqlServer localhost TuryBusDW 2"
             }
           }
         ],
@@ -412,6 +446,7 @@
           {
             "name": "date_id",
             "dataType": "int64",
+            "isHidden": true,
             "sourceColumn": "date_id",
             "sourceProviderType": "Integer"
           },
@@ -423,16 +458,23 @@
             "sourceProviderType": "Integer"
           },
           {
-            "name": "booking_status",
+            "name": "booking_id",
             "dataType": "int64",
-            "sourceColumn": "booking_status",
+            "isHidden": true,
+            "sourceColumn": "booking_id",
             "sourceProviderType": "Integer"
           },
           {
+            "name": "booking_status",
+            "dataType": "string",
+            "sourceColumn": "booking_status",
+            "sourceProviderType": "Char"
+          },
+          {
             "name": "payment_status",
-            "dataType": "int64",
+            "dataType": "string",
             "sourceColumn": "payment_status",
-            "sourceProviderType": "Integer"
+            "sourceProviderType": "Char"
           },
           {
             "name": "daily_service_id",
@@ -463,6 +505,7 @@
           {
             "name": "booking_number",
             "dataType": "string",
+            "isHidden": true,
             "sourceColumn": "booking_number",
             "sourceProviderType": "Char"
           },
@@ -480,7 +523,7 @@
             "source": {
               "type": "query",
               "query": " \t\t\t\tSELECT [dbo].[FactBooking].*   FROM [dbo].[FactBooking] ",
-              "dataSource": "SqlServer localhost TuryBusDW"
+              "dataSource": "SqlServer localhost TuryBusDW 2"
             }
           }
         ],
@@ -502,21 +545,21 @@
     ],
     "relationships": [
       {
-        "name": "b555574b-930a-4c21-a7c2-339d70f0de8c",
+        "name": "8e564ce9-9a63-4fb9-8255-ab5dd151b789",
         "fromTable": "FactBooking",
         "fromColumn": "customer_id",
         "toTable": "DimCustomer",
         "toColumn": "customer_sk"
       },
       {
-        "name": "639b0fba-e342-491e-9f7c-483794b8065f",
+        "name": "8d4d983b-9934-4cb9-939a-3442a1e9ccbb",
         "fromTable": "FactBooking",
         "fromColumn": "daily_service_id",
         "toTable": "DimDailyService",
         "toColumn": "service_sk"
       },
       {
-        "name": "40ca80bd-86ba-472b-8ab7-2f034d3577d2",
+        "name": "98884478-c477-436c-a389-90048bb748df",
         "fromTable": "FactBooking",
         "fromColumn": "date_id",
         "toTable": "DimDate",
