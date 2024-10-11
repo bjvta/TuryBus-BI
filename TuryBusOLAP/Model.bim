@@ -1,0 +1,529 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1200,
+  "model": {
+    "culture": "en-US",
+    "dataSources": [
+      {
+        "name": "SqlServer localhost TuryBusDW",
+        "connectionString": "Provider=MSOLEDBSQL;Data Source=localhost;Persist Security Info=true;User ID=sa;Initial Catalog=TuryBusDW",
+        "impersonationMode": "impersonateServiceAccount",
+        "annotations": [
+          {
+            "name": "ConnectionEditUISource",
+            "value": "SqlServer"
+          }
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "name": "DimCustomer",
+        "columns": [
+          {
+            "name": "customer_sk",
+            "dataType": "int64",
+            "sourceColumn": "customer_sk",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "customer_id",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "customer_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "name",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "name",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "last_name",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "last_name",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "address",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "address",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "dni",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "dni",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "cellphone",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "cellphone",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "birthdate",
+            "dataType": "dateTime",
+            "sourceColumn": "birthdate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBDate"
+          },
+          {
+            "type": "calculated",
+            "name": "full_name",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": "CONCATENATE(CONCATENATE(DimCustomer[name], \" \"), DimCustomer[last_name])"
+          },
+          {
+            "type": "calculated",
+            "name": "age",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "DATEDIFF([birthdate], TODAY(), YEAR)"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DimCustomer",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " \t\t\t\tSELECT [dbo].[DimCustomer].*   FROM [dbo].[DimCustomer] ",
+              "dataSource": "SqlServer localhost TuryBusDW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [dbo].[DimCustomer].*   FROM [dbo].[DimCustomer] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DimCustomer"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "DimDailyService",
+        "columns": [
+          {
+            "name": "service_sk",
+            "dataType": "int64",
+            "sourceColumn": "service_sk",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "service_id",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "service_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "start_time",
+            "dataType": "dateTime",
+            "sourceColumn": "start_time",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          },
+          {
+            "name": "end_time",
+            "dataType": "dateTime",
+            "sourceColumn": "end_time",
+            "formatString": "General Date",
+            "sourceProviderType": "DBTimeStamp"
+          },
+          {
+            "name": "seasonality",
+            "dataType": "string",
+            "sourceColumn": "seasonality",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "price",
+            "dataType": "double",
+            "sourceColumn": "price",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "max_group_size",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "max_group_size",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "min_group_size",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "min_group_size",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "children_allowed",
+            "dataType": "boolean",
+            "isHidden": true,
+            "sourceColumn": "children_allowed",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceProviderType": "Boolean"
+          },
+          {
+            "name": "service_type",
+            "dataType": "string",
+            "sourceColumn": "service_type",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "route_name",
+            "dataType": "string",
+            "sourceColumn": "route_name",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "description",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "description",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "distance_km",
+            "dataType": "double",
+            "sourceColumn": "distance_km",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "duration_hours",
+            "dataType": "double",
+            "sourceColumn": "duration_hours",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "difficulty_level",
+            "dataType": "string",
+            "sourceColumn": "difficulty_level",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "transport_mode",
+            "dataType": "string",
+            "sourceColumn": "transport_mode",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "available_guides",
+            "dataType": "boolean",
+            "isHidden": true,
+            "sourceColumn": "available_guides",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "sourceProviderType": "Boolean"
+          },
+          {
+            "name": "languages_availables",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "languages_availables",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "route_type",
+            "dataType": "string",
+            "sourceColumn": "route_type",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "location_lat",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "location_lat",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "location_lng",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "location_lng",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "location_place",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "location_place",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "location_description",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "location_description",
+            "sourceProviderType": "Char"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DimDailyService",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " \t\t\t\tSELECT [dbo].[DimDailyService].*   FROM [dbo].[DimDailyService] ",
+              "dataSource": "SqlServer localhost TuryBusDW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [dbo].[DimDailyService].*   FROM [dbo].[DimDailyService] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DimDailyService"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "DimDate",
+        "columns": [
+          {
+            "name": "DateKey",
+            "dataType": "int64",
+            "sourceColumn": "DateKey",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "FullDate",
+            "dataType": "dateTime",
+            "sourceColumn": "FullDate",
+            "formatString": "General Date",
+            "sourceProviderType": "DBDate"
+          },
+          {
+            "name": "DayNumberOfWeek",
+            "dataType": "int64",
+            "sourceColumn": "DayNumberOfWeek",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "DayNameOfWeek",
+            "dataType": "string",
+            "sourceColumn": "DayNameOfWeek",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "DayNumberOfMonth",
+            "dataType": "int64",
+            "sourceColumn": "DayNumberOfMonth",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "DayNumberOfYear",
+            "dataType": "int64",
+            "sourceColumn": "DayNumberOfYear",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "WeekNumberOfYear",
+            "dataType": "int64",
+            "sourceColumn": "WeekNumberOfYear",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "MonthName",
+            "dataType": "string",
+            "sourceColumn": "MonthName",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "MonthNumberOfYear",
+            "dataType": "int64",
+            "sourceColumn": "MonthNumberOfYear",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "CalendarQuarter",
+            "dataType": "int64",
+            "sourceColumn": "CalendarQuarter",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "CalendarYear",
+            "dataType": "int64",
+            "sourceColumn": "CalendarYear",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "CalendarSemester",
+            "dataType": "int64",
+            "sourceColumn": "CalendarSemester",
+            "sourceProviderType": "UnsignedTinyInt"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DimDate",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " \t\t\t\tSELECT [dbo].[DimDate].*   FROM [dbo].[DimDate] ",
+              "dataSource": "SqlServer localhost TuryBusDW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [dbo].[DimDate].*   FROM [dbo].[DimDate] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DimDate"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      },
+      {
+        "name": "FactBooking",
+        "columns": [
+          {
+            "name": "date_id",
+            "dataType": "int64",
+            "sourceColumn": "date_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "customer_id",
+            "dataType": "int64",
+            "sourceColumn": "customer_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "booking_status",
+            "dataType": "int64",
+            "sourceColumn": "booking_status",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "payment_status",
+            "dataType": "int64",
+            "sourceColumn": "payment_status",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "daily_service_id",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "daily_service_id",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "price",
+            "dataType": "double",
+            "sourceColumn": "price",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "currency",
+            "dataType": "string",
+            "sourceColumn": "currency",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "special_request",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "special_request",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "booking_number",
+            "dataType": "string",
+            "sourceColumn": "booking_number",
+            "sourceProviderType": "Char"
+          },
+          {
+            "name": "number_of_people",
+            "dataType": "int64",
+            "sourceColumn": "number_of_people",
+            "sourceProviderType": "Integer"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "FactBooking",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " \t\t\t\tSELECT [dbo].[FactBooking].*   FROM [dbo].[FactBooking] ",
+              "dataSource": "SqlServer localhost TuryBusDW"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [dbo].[FactBooking].*   FROM [dbo].[FactBooking] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "FactBooking"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "dbo"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "b555574b-930a-4c21-a7c2-339d70f0de8c",
+        "fromTable": "FactBooking",
+        "fromColumn": "customer_id",
+        "toTable": "DimCustomer",
+        "toColumn": "customer_sk"
+      },
+      {
+        "name": "639b0fba-e342-491e-9f7c-483794b8065f",
+        "fromTable": "FactBooking",
+        "fromColumn": "daily_service_id",
+        "toTable": "DimDailyService",
+        "toColumn": "service_sk"
+      },
+      {
+        "name": "40ca80bd-86ba-472b-8ab7-2f034d3577d2",
+        "fromTable": "FactBooking",
+        "fromColumn": "date_id",
+        "toTable": "DimDate",
+        "toColumn": "DateKey"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "400"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}

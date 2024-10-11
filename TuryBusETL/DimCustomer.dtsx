@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="DimCustomer"
   DTS:PackageType="5"
-  DTS:VersionBuild="14"
-  DTS:VersionGUID="{E8936D43-4457-40EF-926D-C494470B143D}">
+  DTS:VersionBuild="15"
+  DTS:VersionGUID="{A26834E4-9400-4B51-8446-96466EA093FA}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1046,6 +1046,10 @@ where [refTable].[customer_id] = ?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="148,42"
+          Id="Package\Clean Staging"
+          TopLeft="484,215" />
+        <NodeLayout
           Size="212,42"
           Id="Package\Get Database Row Version"
           TopLeft="244,61" />
@@ -1053,6 +1057,18 @@ where [refTable].[customer_id] = ?</property>
           Size="186,42"
           Id="Package\Get Last Row Version"
           TopLeft="309,150" />
+        <NodeLayout
+          Size="212,42"
+          Id="Package\Load Customers to Staging"
+          TopLeft="511.857142857143,316" />
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Staging to Dim"
+          TopLeft="582,388" />
+        <NodeLayout
+          Size="198,42"
+          Id="Package\Update PackageVersion"
+          TopLeft="523,472" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="350,103">
@@ -1087,10 +1103,6 @@ where [refTable].[customer_id] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="148,42"
-          Id="Package\Clean Staging"
-          TopLeft="484,215" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
           TopLeft="402,192">
@@ -1125,10 +1137,6 @@ where [refTable].[customer_id] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="212,42"
-          Id="Package\Load Customers to Staging"
-          TopLeft="511.857142857143,316" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
           TopLeft="558,257">
@@ -1163,14 +1171,6 @@ where [refTable].[customer_id] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="198,42"
-          Id="Package\Update PackageVersion"
-          TopLeft="523,472" />
-        <NodeLayout
-          Size="151,42"
-          Id="Package\Staging to Dim"
-          TopLeft="582,388" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
           TopLeft="617.857142857143,358">
@@ -1373,20 +1373,12 @@ where [refTable].[customer_id] = ?</property>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Customers to Staging\Get Customers by Row Version">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Load Customers to Staging\Lookup">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -1396,7 +1388,7 @@ where [refTable].[customer_id] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -1404,7 +1396,7 @@ where [refTable].[customer_id] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Customers to Staging\Load to Staging">
+    design-time-name="Package\Load Customers to Staging\Load Dim Customer">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -1417,7 +1409,15 @@ where [refTable].[customer_id] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Customers to Staging\Load Dim Customer">
+    design-time-name="Package\Load Customers to Staging\Get Customers by Row Version">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Customers to Staging\Load to Staging">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
