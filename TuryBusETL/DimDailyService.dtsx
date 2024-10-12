@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="DimDailyService"
   DTS:PackageType="5"
-  DTS:VersionBuild="26"
-  DTS:VersionGUID="{97641C4F-F35E-4432-8C60-89E7F787B130}">
+  DTS:VersionBuild="27"
+  DTS:VersionGUID="{425EAEA2-958F-4C5F-B8CE-2EBE87E800FC}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1599,8 +1599,7 @@
                     <externalMetadataColumn
                       refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[languages_availables]"
                       codePage="1252"
-                      dataType="str"
-                      length="255"
+                      dataType="text"
                       name="languages_availables" />
                     <externalMetadataColumn
                       refId="Package\Load Services\Load staging.Inputs[OLE DB Destination Input].ExternalColumns[route_type]"
@@ -1971,7 +1970,7 @@ where [refTable].[service_id] = ?</property>
           Id="Package\Get LastRowVersion"
           TopLeft="443.162402813859,141.648741230164" />
         <NodeLayout
-          Size="147,42"
+          Size="143,42"
           Id="Package\Load Services"
           TopLeft="462.393172463448,347.333325022331" />
         <NodeLayout
@@ -2028,18 +2027,18 @@ where [refTable].[service_id] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 2]"
-          TopLeft="533.423941568571,288.087447732752">
+          TopLeft="532.373941568571,288.487447732752">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,59.2458772895791"
+              EndConnector="0,58.845877289579"
               Start="0,0"
-              End="0,51.7458772895791">
+              End="0,51.345877289579">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,51.7458772895791" />
+                    End="0,51.345877289579" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2050,18 +2049,18 @@ where [refTable].[service_id] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Restricción 3]"
-          TopLeft="535.006847681777,388.933325022331">
+          TopLeft="533.856847681777,389.333325022331">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,62.9448039679917"
+              EndConnector="0,62.544803967992"
               Start="0,0"
-              End="0,55.4448039679917">
+              End="0,55.044803967992">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,55.4448039679917" />
+                    End="0,55.044803967992" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2232,7 +2231,7 @@ where [refTable].[service_id] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -2242,7 +2241,7 @@ where [refTable].[service_id] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>

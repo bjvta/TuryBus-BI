@@ -2,8 +2,7 @@
 AS
 BEGIN
 	UPDATE dds
-	SET [service_id]			= dds.[service_id]
-		,[start_time]			= dds.[start_time]
+	SET  [start_time]			= dds.[start_time]
 		,[end_time]				= dds.[end_time]
 		,[seasonality]			= dds.[seasonality]
 		,[price]				= dds.[price]
