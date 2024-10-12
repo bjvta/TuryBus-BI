@@ -2,10 +2,10 @@
 CREATE PROCEDURE [dbo].[DW_MergeFactBooking]
 AS
 BEGIN
-	UPDATE dc
-	SET [date_id] = sc.[date_id]
-      ,[customer_id] = sc.[customer_id]
-      ,[booking_id] = sc.[booking_id]
+	UPDATE fb
+	SET [date_id] = sb.[date_id]
+      ,[customer_id] = sb.[customer_id]
+      ,[booking_id] = sb.[booking_id]
       ,[booking_status] = sb.[booking_status]
       ,[payment_status] = sb.[payment_status]
       ,[daily_service_id] = sb.[daily_service_id]
