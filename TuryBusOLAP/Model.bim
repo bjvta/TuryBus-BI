@@ -93,6 +93,13 @@
             "dataType": "string",
             "isDataTypeInferred": true,
             "expression": "CONCATENATE(CONCATENATE([name], \" \"), [last_name])"
+          },
+          {
+            "type": "calculated",
+            "name": "age",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "DATEDIFF([birthdate], TODAY(), YEAR)"
           }
         ],
         "partitions": [
